@@ -5,6 +5,7 @@ use App\Models\Gender;
 use App\Models\Universe;
 use App\Models\SuperHero;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SuperHeroController extends Controller
 {
@@ -13,7 +14,8 @@ class SuperHeroController extends Controller
      */
     public function index()
     {
-        //
+        $superheroes = Superhero::all();
+        return view('superheroes.index', compact('superheroes'));//
     }
 
     /**
@@ -57,7 +59,10 @@ class SuperHeroController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $superhero = Superhero::findorfail($id);
+        $genders = Gender::select('id', 'name')->get();
+        $universes = Universe::select('id','name')->get();
+        return view('superheroes.edit', compact('superhero', 'genders'));
     }
 
     /**
@@ -65,7 +70,17 @@ class SuperHeroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $superhero = Superhero::find($id);
+        $superhero->update([
+            'gender_id' => $request->gender_id,
+            'real_name' => $request ->real_name,
+            'universe_id' => 1,
+            'name' => $request->name,
+            'picture' => $request->picture,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+        return to_route ('superheroes.index');
     }
 
     /**
@@ -73,6 +88,8 @@ class SuperHeroController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $superhero = Superhero::find($id);
+        $superhero->delete();
+        return to_route ('superheroes.index');//
     }
 }

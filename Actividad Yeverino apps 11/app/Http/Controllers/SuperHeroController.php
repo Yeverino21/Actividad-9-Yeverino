@@ -40,7 +40,7 @@ class SuperheroController extends Controller
             'gender_id' => $request->gender_id,
             'real_name' => $request ->real_name,
             'universe_id' => 1,
-            'name' => 'Spiderman',
+            'name' => 'Daredevil',
             'picture' => $request->picture,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
