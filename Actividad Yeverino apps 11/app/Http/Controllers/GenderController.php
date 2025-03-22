@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Gender;
+use Illuminate\Http\Request;
 
 class GenderController extends Controller
 {
     public function index(){
-        $gender = Gender::all();
-        return view('gender', compact('gender'));
+
+    $gender = Gender::all();
+
+    return view('gender.index', compact('gender'));
     }
 
     public function create()
